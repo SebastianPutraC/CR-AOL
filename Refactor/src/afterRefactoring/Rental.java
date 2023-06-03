@@ -1,27 +1,33 @@
 package afterRefactoring;
 
-class Rental {
+class Rental 
+{
     private Movie _movie;
     private int _daysRented;
 
-    public Rental(Movie movie, int daysRented) {
+    public Rental(Movie movie) 
+    {
         _movie = movie;
-        _daysRented = daysRented;
+        _daysRented = 0;
     }
 
-    public int getDaysRented() {
+    public int getDaysRented() 
+    {
         return _daysRented;
     }
 
-    public Movie getMovie() {
+    public Movie getMovie() 
+    {
         return _movie;
     }
 
-    double getCharge() {
+    double getCharge()
+    {
        return  _movie.getCharge(getDaysRented());
     }
 
-    int getFrequentRenterPoints() {
+    int getFrequentRenterPoints() 
+    {
       return _movie.getFrequentRenterPoints(getDaysRented());
     }
 

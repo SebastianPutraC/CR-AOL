@@ -2,12 +2,19 @@ package afterRefactoring.price;
 
 import afterRefactoring.Movie;
 
-public class ChildrensPrice extends Price {
-    public int getPriceCode() {
+public class ChildrensPrice extends Price 
+{
+    public int getPriceCode() 
+    {
         return Movie.CHILDRENS;
     }
+    public String getPriceName()
+    {
+    	return "Children's Movie";
+    }
 
-    public double getCharge(int daysRented) {
+    public double getCharge(int daysRented) 
+    {
         double result = 0;
         result += 1.5;
         if (daysRented > 3)

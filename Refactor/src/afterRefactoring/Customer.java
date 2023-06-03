@@ -3,28 +3,33 @@ package afterRefactoring;
 import java.util.Enumeration;
 import java.util.Vector;
 
-class Customer {
+class Customer 
+{
     private String _name;
     private Vector _rentals = new Vector();
 
-    public Customer(String name) {
+    public Customer(String name) 
+    {
         _name = name;
     }
 
-    ;
-
-    public void addRental(Rental arg) {
+    public void addRental(Rental arg)  //Nambah rental film kustomer
+    {
         _rentals.addElement(arg);
     }
+    
 
-    public String getName() {
+    public String getName() 
+    {
         return _name;
     }
 
-    public String statement() {
+    public String statement() //display rental film dari data kustomer
+    {
         Enumeration rentals = _rentals.elements();
         String result = "Rental Record for " + getName() + "\n";
-        while (rentals.hasMoreElements()) {
+        while (rentals.hasMoreElements())
+        {
             Rental each = (Rental) rentals.nextElement();
 
             result += "\t" + String.valueOf(each.getCharge()) + "\n";
@@ -35,17 +40,28 @@ class Customer {
         return result;
     }
 
-    private double getTotalCharge() { double result = 0;
-        Enumeration rentals = _rentals.elements(); while (rentals.hasMoreElements()) {
+    private double getTotalCharge()
+    { 
+    	double result = 0;
+        Enumeration rentals = _rentals.elements(); 
+        while (rentals.hasMoreElements()) 
+        {
             Rental each = (Rental) rentals.nextElement();
-            result += each.getCharge(); }
+            result += each.getCharge(); 
+        }
         return result;
     }
 
-    private int getTotalFrequentRenterPoints(){ int result = 0;
-        Enumeration rentals = _rentals.elements(); while (rentals.hasMoreElements()) {
+    private int getTotalFrequentRenterPoints()
+    { 
+    	int result = 0;
+        Enumeration rentals = _rentals.elements(); 
+        while (rentals.hasMoreElements()) 
+        {
             Rental each = (Rental) rentals.nextElement();
-            result += each.getFrequentRenterPoints(); }
-        return result; }
+            result += each.getFrequentRenterPoints(); 
+        }
+        return result; 
+    }
 
 }
