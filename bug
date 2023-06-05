@@ -1,1 +1,2 @@
 Duplikasi objek objek dalam list saat writing dan reading file serializable. (file customers.ser dan movies.ser harus ada di folder Refactor untuk mencoba)
+Sistem Administrasi seharusnya berjalan normal tanpa fitur save system. 
