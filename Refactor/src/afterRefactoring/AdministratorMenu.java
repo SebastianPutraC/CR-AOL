@@ -6,40 +6,43 @@ import java.util.Scanner;
 public class AdministratorMenu 
 {
 	private static int movieCapacity = 20;
-	private List<Rental> movies = new ArrayList<Rental>();
-	private List<Customer> customers = new ArrayList<Customer>();
-	private DataStore dataStore = new DataStore();
+	public List<Rental> movies = new ArrayList<Rental>();
+	public List<Customer> customers = new ArrayList<Customer>();
+	private Main main;
 	
-	public void RestoreData()
+	//private DataStore dataStore = new DataStore();
+	
+	/*public void RestoreData()
 	{
-		//dataStore.ReadData(); buggy
+		dataStore.ReadData();
 		
 		if (dataStore.movies.size() == 0 && dataStore.customers.size() == 0)
 		{
-			System.out.println("No data Has Been Found");
-			customers.add(new Customer("John"));
-			customers.add(new Customer("Bob"));
-			customers.add(new Customer("Mary"));
-			
-			Movie movie1 = new Movie("The Avengers", 1);
-			Movie movie2 = new Movie("Tom and Jerry", 2);
-			Movie movie3 = new Movie("John Wick 4", 3);
-			
-			movies.add(new Rental(movie1));
-			movies.add(new Rental(movie2));
-			movies.add(new Rental(movie3));
-			return;
+			InitializeData();
 		}
 		
 		movies.addAll(dataStore.movies);
 		customers.addAll(dataStore.customers);
 		System.out.println("Administrator Data Successfully Restored");
-	}
-	public void AccessAdministrator() 
+	} buggy */
+	public void InitializeData(Main main) // ONLY DO ONCE AT START
 	{
-		MainMenu();
+		customers.add(new Customer("John"));
+		customers.add(new Customer("Bob"));
+		customers.add(new Customer("Mary"));
+		
+		Movie movie1 = new Movie("Indiana Jones", 1, "IndianaJones");
+		Movie movie2 = new Movie("Tom and Jerry", 2, "NONE");
+		Movie movie3 = new Movie("John Wick 4", 3, "NONE");
+		
+		movies.add(new Rental(movie1));
+		movies.add(new Rental(movie2));
+		movies.add(new Rental(movie3));
+		
+		this.main = main;
+		return;
 	}
-	private void MainMenu()
+	public void MainMenu()
 	{
 		Scanner scanner = new Scanner(System.in);
 		
@@ -70,8 +73,8 @@ public class AdministratorMenu
             	case 4:
             		ViewAllCustomer();
             	case 5:
-            		dataStore.StoringData(movies, customers);
-            		System.exit(0);
+            		main.ChooseAccess();
+            		// dataStore.StoringData(movies, customers);
             	default:
             		System.out.println("Wrong Input !");
             }
@@ -89,26 +92,39 @@ public class AdministratorMenu
          System.out.println("3. New Release");
          System.out.println("Please enter the Movie Type: ");
          int type = scanner.nextInt();
+         scanner.nextLine(); 
          while (type > 3 || type < 0)
          {
         	 System.out.println("Wrong Input");
         	 type = scanner.nextInt();
+        	 scanner.nextLine(); 
          }
          
-         Movie newMovie = new Movie(title, type);
-         while (true)
-         {
-        	 System.out.println("Is this Movie's information correct?");
-             System.out.println("Movie Title: " + newMovie.getTitle());
-             System.out.println("Movie Type: " + newMovie.getPriceName());
+		 System.out.println("Enter the Movie path: ");
+		 String path = scanner.nextLine();
+		 
+         Movie newMovie = new Movie(title, type, path); 
+         ConfirmInformation(newMovie);
+        
+	}
+	private void ConfirmInformation(Movie movie)
+	{
+		 Scanner scanner = new Scanner(System.in);
+		 System.out.println("Is this Movie's information correct?");
+		 while (true)
+		 {
+             System.out.println("Movie Title: " + movie.getTitle());
+             System.out.println("Movie Type: " + movie.getPriceName());
+             System.out.println("Movie Path: " + movie.getMoviePath());
              System.out.println("1. Yes");
              System.out.println("2. No, Reset");
              System.out.println("3. No, Return to main menu");
              int choice = scanner.nextInt();
+             scanner.nextLine(); 
              switch(choice)
              {
              	 case 1:
-             		 Rental newRental = new Rental(newMovie);
+             		 Rental newRental = new Rental(movie);
              		 movies.add(newRental);
              		 System.out.println(newRental.getMovie().getTitle() + " is added to the store");
              		 scanner.nextLine();
@@ -125,7 +141,6 @@ public class AdministratorMenu
              }
          }
 	}
-	
 	private void MovieList()
 	{
 		System.out.println("List of All Available Movies");
@@ -134,7 +149,14 @@ public class AdministratorMenu
 			System.out.println((i + 1) + ". " + movies.get(i).getMovie().getTitle() + " " + movies.get(i).getMovie().getPriceName());
 		}	
 	}
-	
+	public void CustomerList()
+	{
+		System.out.println("List of all Customers");
+		for (int i = 0; i < customers.size(); i++)
+		{
+			System.out.println((i + 1) + ". " + customers.get(i).getName());
+		}	
+	}
 	private void RemoveMovieMenu()
 	{
 		Scanner scanner = new Scanner(System.in);
@@ -142,6 +164,7 @@ public class AdministratorMenu
 		
 		System.out.println("Enter the movie that needs to be removed");
 		int choice = scanner.nextInt();
+		scanner.nextLine(); 
 		
 		System.out.println(movies.get(choice - 1).getMovie().getTitle() + " is now removed from the store");
 		movies.remove(choice);
@@ -157,15 +180,11 @@ public class AdministratorMenu
 		scanner.nextLine();
 		MainMenu();
 	}
-	
 	private void ViewAllCustomer()
 	{
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("List of all Customers");
-		for (int i = 0; i < customers.size(); i++)
-		{
-			System.out.println((i + 1) + ". " + customers.get(i).getName());
-		}	
+		CustomerList();
+		
 		scanner.nextLine();
 		MainMenu();
 	}

@@ -14,11 +14,14 @@ public class Movie implements Serializable
     public static final int NEW_RELEASE = 2;
     private String _title;
     private Price _price;
+    
+    private String _moviePath; //iseng
 
-    public Movie(String title, int priceCode) 
+    public Movie(String title, int priceCode, String moviePath) 
     {
         _title = title;
         setPriceCode(priceCode);
+        _moviePath = moviePath;
     }
 
     public int getPriceCode()
@@ -60,5 +63,10 @@ public class Movie implements Serializable
     int getFrequentRenterPoints(int daysRented) 
     {
       return _price.getFrequentRenterPoints(daysRented);
+    }
+    
+    public String getMoviePath() // iseng
+    {
+    	return "src/" + _moviePath + ".gif";
     }
 }

@@ -14,13 +14,18 @@ public class Main
 	{
 		Main mainClass = new Main();
 		// mainClass.RestoreData(); buggy
+		mainClass.InitializeData();
 		mainClass.ChooseAccess();
 	}
-	private void RestoreData() // buggy
+	/*private void RestoreData()
 	{
 		adminMenu.RestoreData();
+	} buggy*/
+	private void InitializeData() // ONLY DO ONCE AT START
+	{
+		adminMenu.InitializeData(this);
 	}
-	private void ChooseAccess()
+	public void ChooseAccess()
 	{
 		while(true)
 		{
@@ -37,24 +42,34 @@ public class Main
 	        switch (choice)
 	        {
 	        	case 1:
+	        		ChooseCustomer();
 	        		break;
 	        	case 2:
-	        		adminMenu.AccessAdministrator();
+	        		adminMenu.MainMenu();
 	        		break;
 	        	case 3:
 	        		System.exit(0);
 	        	case 4:
-	        		WatchMovieTest();
+	        		WatchMovieTest(adminMenu.movies.get((0)));
 	        		break;
 	        	default:
 	        		System.out.println("Wrong Input");
 	        }
 		}
 	}
-	private void WatchMovieTest() // Customer Watch Movie Test 
+	private void ChooseCustomer()
 	{
-		JLabel label = new JLabel(new ImageIcon("src/IndianaJones.gif"));
-		JFrame frame = new JFrame("Movie");
+		Scanner scanner = new Scanner(System.in);
+		adminMenu.CustomerList();
+		
+		System.out.println("Which customer are you?");
+		int choice = scanner.nextInt();
+	}
+	
+	private void WatchMovieTest(Rental movie) //Additional Feature
+	{
+		JLabel label = new JLabel(new ImageIcon(movie.getMovie().getMoviePath()));
+		JFrame frame = new JFrame(movie.getMovie().getTitle());
 		
 		frame.getContentPane().add(label);
 		frame.pack();
