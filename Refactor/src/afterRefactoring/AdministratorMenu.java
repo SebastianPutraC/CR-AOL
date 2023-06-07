@@ -29,7 +29,7 @@ public class AdministratorMenu
 	{
 		customers.add(new Customer("John"));
 		customers.add(new Customer("Bob"));
-		customers.add(new Customer("Mary"));
+		
 		
 		Movie movie1 = new Movie("Indiana Jones", 1, "IndianaJones");
 		Movie movie2 = new Movie("Tom and Jerry", 2, "NONE");
@@ -38,6 +38,8 @@ public class AdministratorMenu
 		movies.add(new Rental(movie1));
 		movies.add(new Rental(movie2));
 		movies.add(new Rental(movie3));
+		
+		customers.get(0).addRental(movies.get(0));
 		
 		this.main = main;
 		return;
@@ -141,7 +143,7 @@ public class AdministratorMenu
              }
          }
 	}
-	private void MovieList()
+	public void MovieList()
 	{
 		System.out.println("List of All Available Movies");
 		for (int i = 0; i < movies.size(); i++)

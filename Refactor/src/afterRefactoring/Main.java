@@ -3,9 +3,6 @@ package afterRefactoring;
 import java.util.Scanner;
 import javax.swing.*;
 
-import java.awt.event.ActionListener;
-import java.net.*; 
-
 public class Main 
 {
 	private AdministratorMenu adminMenu = new AdministratorMenu();
@@ -24,6 +21,7 @@ public class Main
 	private void InitializeData() // ONLY DO ONCE AT START
 	{
 		adminMenu.InitializeData(this);
+		customerMenu.InitializeData(this, adminMenu);
 	}
 	public void ChooseAccess()
 	{
@@ -64,6 +62,9 @@ public class Main
 		
 		System.out.println("Which customer are you?");
 		int choice = scanner.nextInt();
+		
+		customerMenu.PickCustomer(adminMenu.customers.get(choice - 1));
+		customerMenu.MainMenu();
 	}
 	
 	private void WatchMovieTest(Rental movie) //Additional Feature

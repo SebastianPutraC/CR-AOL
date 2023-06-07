@@ -67,6 +67,6 @@ public class Movie implements Serializable
     
     public String getMoviePath() // iseng
     {
-    	return "src/" + _moviePath + ".gif";
+    	return "src/Movies/" + _moviePath + ".gif";
     }
 }

@@ -7,7 +7,7 @@ import java.util.Vector;
 class Customer implements Serializable
 {
     private String _name;
-    private Vector _rentals = new Vector();
+    Vector<Rental> _rentals = new Vector<Rental>(); //Sementara public
 
     public Customer(String name) 
     {
@@ -19,13 +19,12 @@ class Customer implements Serializable
         _rentals.addElement(arg);
     }
     
-
     public String getName() 
     {
         return _name;
     }
 
-    public String statement() //display rental film dari data kustomer
+    public String statement() //display rental dari data kustomer
     {
         Enumeration rentals = _rentals.elements();
         String result = "Rental Record for " + getName() + "\n";
