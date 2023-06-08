@@ -18,6 +18,7 @@ public class AdministratorMenu
 	{
 		return customers.get(customer - 1);
 	}
+	
 	public void InitializeData(Main main) // ONLY DO ONCE AT START
 	{
 		Movie movie1 = new Movie("Indiana Jones", 1, "IndianaJones");
@@ -35,44 +36,57 @@ public class AdministratorMenu
 		this.main = main;
 		return;
 	}
+	
 	public void MainMenu()
 	{
 		Scanner scanner = new Scanner(System.in);
 		
         while(true) 
         {
-            System.out.println("Welcome to the MovieAddict Administrator menu");
-            System.out.println("1. Add a Movie to the store");
-            System.out.println("2. Remove a Movie from the store");
-            System.out.println("3. View all Movies in the store");
-            System.out.println("4. View all registered Customer");
-            System.out.println("5. Quit");
-
-            System.out.print("Please enter your input: ");
+        	MainMenuUI();
             int choice = scanner.nextInt();
             scanner.nextLine(); 
-
-            switch (choice)
-            {
-            	case 1:
-            		if(movies.size() >= movieCapacity)
-            			System.out.println("Movie Capacity Exceeded");
-            		else
-            			AddMovieMenu();
-            	case 2:
-            		RemoveMovieMenu();
-            	case 3:
-            		ViewAllMovie();
-            	case 4:
-            		ViewAllCustomer();
-            	case 5:
-            		main.ChooseAccess();
-            		// dataStore.StoringData(movies, customers);
-            	default:
-            		System.out.println("Wrong Input !");
-            }
+            MainMenuChoice(choice);
         }
 	}
+	
+	private void MainMenuUI()
+	{
+		 System.out.println("Welcome to the MovieAddict Administrator menu");
+         System.out.println("1. Add a Movie to the store");
+         System.out.println("2. Remove a Movie from the store");
+         System.out.println("3. View all Movies in the store");
+         System.out.println("4. View all registered Customer");
+         System.out.println("5. Quit");
+
+         System.out.print("Please enter your input: ");
+	}
+	private void MainMenuChoice(int choice)
+	{
+		switch (choice)
+        {
+        	case 1:
+        		if(movies.size() >= movieCapacity)
+        			System.out.println("Movie Capacity Exceeded");
+        		else
+        			AddMovieMenu();
+        		break;
+        	case 2:
+        		RemoveMovieMenu();
+        		break;
+        	case 3:
+        		ViewAllMovie();
+        		break;
+        	case 4:
+        		ViewAllCustomer();
+        		break;
+        	case 5:
+        		main.ChooseAccess();
+        	default:
+        		System.out.println("Wrong Input !");
+        }
+	}
+	
 	
 	private void AddMovieMenu()
 	{
@@ -104,36 +118,48 @@ public class AdministratorMenu
 	{
 		 Scanner scanner = new Scanner(System.in);
 		 System.out.println("Is this Movie's information correct?");
+		 ConfirmInformationUI(movie);
 		 while (true)
-		 {
-             System.out.println("Movie Title: " + movie.getTitle());
-             System.out.println("Movie Type: " + movie.getPriceName());
-             System.out.println("Movie Path: " + movie.getMoviePath());
-             System.out.println("1. Yes");
-             System.out.println("2. No, Reset");
-             System.out.println("3. No, Return to main menu");
+		 { 
              int choice = scanner.nextInt();
              scanner.nextLine(); 
-             switch(choice)
-             {
-             	 case 1:
-             		 Rental newRental = new Rental(movie);
-             		 movies.add(newRental);
-             		 System.out.println(newRental.getMovie().getTitle() + " is added to the store");
-             		 scanner.nextLine();
-             		 MainMenu();
-             		 break;
-             	 case 2:         		 
-             		 AddMovieMenu();
-             		 break;
-             	 case 3:
-             		 MainMenu();
-             		 break;
-             	 default:
-             		 System.out.println("Wrong Input");
-             }
+             ConfirmInformationChoice(movie, choice);
          }
 	}
+	private void ConfirmInformationUI(Movie movie)
+	{
+		System.out.println("Movie Title: " + movie.getTitle());
+        System.out.println("Movie Type: " + movie.getPriceName());
+        System.out.println("Movie Path: " + movie.getMoviePath());
+        System.out.println("1. Yes");
+        System.out.println("2. No, Reset");
+        System.out.println("3. No, Return to main menu");
+	}
+	private void ConfirmInformationChoice(Movie movie, int choice)
+	{
+		 Scanner scanner = new Scanner(System.in);
+		 switch(choice)
+         {
+         	 case 1:
+         		 Rental newRental = new Rental(movie);
+         		 movies.add(newRental);
+         		 System.out.println(newRental.getMovie().getTitle() + " is added to the store");
+         		 System.out.println("Press Enter to return");
+         		 scanner.nextLine();
+         		 MainMenu();
+         		 break;
+         	 case 2:         		 
+         		 AddMovieMenu();
+         		 break;
+         	 case 3:
+         		 MainMenu();
+         		 break;
+         	 default:
+         		 System.out.println("Wrong Input");
+         }
+	}
+	
+	
 	public void MovieList()
 	{
 		System.out.println("List of All Available Movies");
@@ -158,27 +184,34 @@ public class AdministratorMenu
 		System.out.println("Enter the movie that needs to be removed");
 		int choice = scanner.nextInt();
 		scanner.nextLine(); 
-		
+		while(choice < 1 || choice > movies.size())
+		{
+			System.out.println("Wrong Input");
+			choice = scanner.nextInt();
+			scanner.nextLine(); 
+		}
 		System.out.println(movies.get(choice - 1).getMovie().getTitle() + " is now removed from the store");
-		movies.remove(choice);
+		movies.remove(choice - 1);
 		
-		MainMenu();
+		System.out.println("Press Enter to return");
+		scanner.nextLine(); 
 	}
+	
 	
 	private void ViewAllMovie()
 	{
 		Scanner scanner = new Scanner(System.in);
 		MovieList();
 		
+		System.out.println("Press Enter to return");
 		scanner.nextLine();
-		MainMenu();
 	}
 	private void ViewAllCustomer()
 	{
 		Scanner scanner = new Scanner(System.in);
 		CustomerList();
 		
+		System.out.println("Press Enter to return");
 		scanner.nextLine();
-		MainMenu();
 	}
 }

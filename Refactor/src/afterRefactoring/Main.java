@@ -19,18 +19,12 @@ public class Main
 	}
 	public void ChooseAccess()
 	{
+		Scanner scanner = new Scanner(System.in);
+		ChooseUI();
 		while(true)
 		{
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("Welcome to MovieAddict online subscription service");
-			System.out.println("Are you a customer or an Administrator");
-	        System.out.println("1. Customer");
-	        System.out.println("2. Administrator");
-	        System.out.println("3. Exit");
-	        
 	        int choice = scanner.nextInt();
 	        scanner.nextLine(); 
-	        
 	        switch (choice)
 	        {
 	        	case 1:
@@ -44,7 +38,15 @@ public class Main
 	        	default:
 	        		System.out.println("Wrong Input");
 	        }
-		}
+		}	
+	}
+	private void ChooseUI()
+	{
+		System.out.println("Welcome to MovieAddict online subscription service");
+		System.out.println("Are you a customer or an Administrator");
+        System.out.println("1. Customer");
+        System.out.println("2. Administrator");
+        System.out.println("3. Exit");
 	}
 	private void ChooseCustomer()
 	{
