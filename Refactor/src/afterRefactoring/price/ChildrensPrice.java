@@ -16,7 +16,7 @@ public class ChildrensPrice extends Price
     public double getCharge(int daysRented) 
     {
         double result = 0;
-        result += 1.5;
+        result += 1.5; // Early Price
         if (daysRented > 3)
             result += (daysRented - 3) * 1.5;
 

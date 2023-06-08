@@ -17,7 +17,10 @@ class Rental implements Serializable
     {
         return _daysRented;
     }
-
+    public void addDaysRented()
+    {
+    	_daysRented += 1;
+    }
     public Movie getMovie() 
     {
         return _movie;

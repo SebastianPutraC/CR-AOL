@@ -6,31 +6,20 @@ import java.util.Scanner;
 public class AdministratorMenu 
 {
 	private static int movieCapacity = 20;
-	public List<Rental> movies = new ArrayList<Rental>();
-	public List<Customer> customers = new ArrayList<Customer>();
+	private List<Rental> movies = new ArrayList<Rental>();
+	private List<Customer> customers = new ArrayList<Customer>();
 	private Main main;
 	
-	//private DataStore dataStore = new DataStore();
-	
-	/*public void RestoreData()
+	public Rental getRental(int rental)
 	{
-		dataStore.ReadData();
-		
-		if (dataStore.movies.size() == 0 && dataStore.customers.size() == 0)
-		{
-			InitializeData();
-		}
-		
-		movies.addAll(dataStore.movies);
-		customers.addAll(dataStore.customers);
-		System.out.println("Administrator Data Successfully Restored");
-	} buggy */
+		return movies.get(rental - 1);
+	}
+	public Customer getCustomer(int customer)
+	{
+		return customers.get(customer - 1);
+	}
 	public void InitializeData(Main main) // ONLY DO ONCE AT START
 	{
-		customers.add(new Customer("John"));
-		customers.add(new Customer("Bob"));
-		
-		
 		Movie movie1 = new Movie("Indiana Jones", 1, "IndianaJones");
 		Movie movie2 = new Movie("Tom and Jerry", 2, "NONE");
 		Movie movie3 = new Movie("John Wick 4", 3, "NONE");
@@ -39,6 +28,8 @@ public class AdministratorMenu
 		movies.add(new Rental(movie2));
 		movies.add(new Rental(movie3));
 		
+		customers.add(new Customer("John", 100));
+		customers.add(new Customer("Bob", 20));
 		customers.get(0).addRental(movies.get(0));
 		
 		this.main = main;
